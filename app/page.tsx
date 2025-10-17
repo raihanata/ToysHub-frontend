@@ -92,7 +92,7 @@ export default function Home() {
      
        
       </main>
-      <footer className="w-full border-t bg-red-200 py-1">
+      <footer className="w-full  bg-red-200 py-1">
         <div className="container">
         <Footersection/>
         <div className=" container flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">

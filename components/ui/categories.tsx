@@ -26,7 +26,7 @@ const Categories = () => {
 
 
     return (
-        <section id="features" className="w-full py-5 md:py-5 lg:py-5 px-5">
+        <section id="features" className="w-full pb-1 md:py-1 lg:py-1 px-5">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">

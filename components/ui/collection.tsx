@@ -69,12 +69,12 @@ const Collection = () => {
     return (
         <section id="features" className="w-full py-12 md:py-12 lg:py-12">
             <div className="container px-4 md:px-6">
-                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="flex flex-col items-center justify-center space-y-8 text-center">
                     <div className="space-y-2">
                         <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight {chelseaMarket.className}">
                             Top picks For your Little ones
                         </h2>
-                        <div className="flex items-center gap-2 justify-center">
+                        <div className="flex items-center gap-2 justify-center mb-1">
                             <div className="rounded-lg bg-red-600 px-3 py-1 text-sm text-white dark:text-red-400">
                                 New Arrivals
                             </div>
@@ -87,7 +87,7 @@ const Collection = () => {
 
                     </div>
                 </div>
-              <div className="mx-auto grid max-w-5xl  grid-cols-4 grid-rows-3 gap-1 py-8 px-15 ">
+              <div className="mx-auto grid max-w-5xl  grid-cols-4 grid-rows-3 gap-1 pt-10 pb-4 px-15 ">
                                 {collectionData.map((data, index) => (
                                     <div key={index} className="flex flex-col  space-y-2 rounded-lg  p-1 pb-3">
                                         <div className="">
