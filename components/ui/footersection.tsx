@@ -25,9 +25,9 @@ const Footersection = () => {
                 },
               
               ].map((footerfeature, index) => (
-                <div key={index} className="flex flex-col items-center space-y-2 rounded-lg border p-4">
+                <div key={index} className="flex flex-col items-center space-y-2 rounded-lg border border-red-200 p-4">
                   
-                  <h3 className="text-xl font-bold">{footerfeature.title}</h3>
+                  <h3 className="text-xl font-bold pr-7">{footerfeature.title}</h3>
                   <ul className="space-y-2 text-sm text-gray-600">
               {footerfeature.contents.map((item, i) => (
                 <li key={i}>{item}</li>
