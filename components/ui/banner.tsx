@@ -21,7 +21,7 @@ const Banner = () => {
   const images = [
     
     '/banner2.jpg',
-    '/benner.png',
+    '/banner4.png',
     '/banner-one.png',
   ];
 
