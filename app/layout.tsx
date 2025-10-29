@@ -12,8 +12,7 @@ const inter = Inter({ subsets: ["latin"] })
 const ChelseaMarket = Chelsea_Market({ subsets: ["latin"], weight: ["400"] })
 export const metadata: Metadata = {
   title: "Toyshub-shop-management",
-  description: "All-in-one Booking & ERP solution for clinics",
-    generator: 'v0.dev'
+  description: "All-in-one Booking & ERP solution for clinics"
 }
 
 export default function RootLayout({

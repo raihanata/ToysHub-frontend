@@ -22,49 +22,12 @@ import { Filter, Plus, Search } from "lucide-react"
 import axios from "axios"
 
 // Sample inventory data
-const initialInventory = [
-  {
-    id: 1,
-    name: "Paracetamol 500mg",
-    category: "Medicine",
-    quantity: 120,
-    status: "In Stock",
-    supplier: "Pharma Inc.",
-    expiry: "2025-12-31",
-  },
-  {
-    id: 2,
-    name: "Syringe 5ml",
-    category: "Equipment",
-    quantity: 50,
-    status: "Low Stock",
-    supplier: "MedEquip",
-    expiry: "2027-01-01",
-  },
-  {
-    id: 3,
-    name: "Bandage Roll",
-    category: "Supplies",
-    quantity: 200,
-    status: "In Stock",
-    supplier: "HealthSupplies",
-    expiry: "2026-06-15",
-  },
-  {
-    id: 4,
-    name: "Ibuprofen 200mg",
-    category: "Medicine",
-    quantity: 0,
-    status: "Out of Stock",
-    supplier: "Pharma Inc.",
-    expiry: "2025-08-20",
-  },
-]
+
 ///catogory type
 interface Category {
-  _id:string
+  _id?: string
   name: string;
-  categorydes: string;
+  categoryDescription: string;
 }
 // const categories = ["all", "Playsets", "Equipment", "Supplies"]
 const statuses = ["all", "In Stock", "Low Stock", "Out of Stock"]
@@ -74,21 +37,14 @@ export default function Categories() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
-  const [inventory, setInventory] = useState(initialInventory)
+  // const [inventory, setInventory] = useState(initialInventory)
   const [dialogCategory, setDialogCategory] = useState("")
   const [dialogStatus, setDialogStatus] = useState("")
   //usestates catogory add
     const [categoryData, setCategoryData] = useState<Category[]>([]);
     const [loading, setLoading] = useState(false);
   // Filter inventory based on search, category, and status
-  const filteredInventory = inventory.filter((item) => {
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.supplier.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory !== "all" ? item.category === selectedCategory : true
-    const matchesStatus = selectedStatus !== "all" ? item.status === selectedStatus : true
-    return matchesSearch && matchesCategory && matchesStatus
-  })
+ 
 
   // Add category
  async function handleAddItem(e: React.FormEvent<HTMLFormElement>) {
@@ -97,9 +53,9 @@ export default function Categories() {
 
      const newItem: Category = {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      categorydes: (form.elements.namedItem("categorydes") as HTMLInputElement).value,
+      categoryDescription: (form.elements.namedItem("categoryDescription") as HTMLInputElement).value,
     };
-    if (!newItem.name || !newItem.categorydes) {
+    if (!newItem.name || !newItem.categoryDescription) {
       alert('Please fill all fields');
       return;
     }
@@ -134,8 +90,13 @@ export default function Categories() {
     }
   };
 
-async function handleDelete(id:string){
-   if (!confirm("Are you sure you want to delete this category?")) return;
+async function handleDelete(id:string | undefined){
+    if (!id) {
+      console.log('no id for category')
+      return
+    }
+
+    if (!confirm("Are you sure you want to delete this category?")) return;
     try {
       const response = await axios.delete(`${SERVER_URL}/category/delete/`,
         {
@@ -184,7 +145,7 @@ async function handleDelete(id:string){
               </div>
                <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">Description</Label>
-                <Input id="categorydes" name="categorydes" placeholder="Category Description" className="col-span-3" required />
+                <Input id="categoryDescription" name="categoryDescription" placeholder="Category Description" className="col-span-3" required />
               </div>
               
              
@@ -267,13 +228,14 @@ async function handleDelete(id:string){
                   categoryData.map((item) => (
                     <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                       <td className="p-4 align-middle">{item.name}</td>
-                      <td className="p-4 align-middle">{item.categorydes}</td>
+                      <td className="p-4 align-middle">{item.categoryDescription}</td>
 
                         <td className="p-4 align-middle">
-                           <Button variant="outline"onClick={() => handleDelete(item._id)} >
+                           <Button variant="outline"onClick={() => handleDelete(item?._id)} >
                           {/* <Filter className="h-4 w-4" /> */}
                           DELETE
                       </Button>
+                     
                         </td>
                       {/* <td className="p-4 align-middle">{item.quantity}</td>
                       <td className="p-4 align-middle">

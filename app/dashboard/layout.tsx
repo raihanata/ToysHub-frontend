@@ -71,12 +71,12 @@ export default function DashboardLayout({
 
   const adminNavigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Toys inventory", href: "/dashboard/inventory", icon: Home },
+    { name: "Toys inventory", href: "/dashboard/toys-inventory", icon: Home },
     { name: "Categories", href: "/dashboard/categories", icon: Calendar },
     { name: "Customers", href: "/dashboard/patients", icon: Users },
-      { name: "Sales", href: "/dashboard/payments", icon: Users },
+      { name: "Sales", href: "/dashboard/sales", icon: Users },
        { name: "Suppliers", href: "/dashboard/payments", icon: Users },
-       { name: " Employees", href: "/dashboard/patients", icon: Users },
+       { name: " Employees", href: "/dashboard/bpatients", icon: Users },
       
     // { name: "Consultations", href: "/dashboard/consultations", icon: ClipboardList },
     // { name: "Pharmacy", href: "/dashboard/pharmacy", icon: Pill },
@@ -89,6 +89,7 @@ export default function DashboardLayout({
   const employeeNavigatoin = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "Toys Management", href: "/dashboard/toys-management", icon: Home },
+       { name: "Sales", href: "/dashboard/sales", icon: Users },
     { name: "Appointments", href: "/dashboard/appointments", icon: Calendar },
   
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
