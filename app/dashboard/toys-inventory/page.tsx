@@ -99,11 +99,11 @@ export default function ToysInventory() {
   const [inventory, setInventory] = useState(initialInventory)
   const [dialogCategory, setDialogCategory] = useState("")
   const [dialogStatus, setDialogStatus] = useState("")
-//pagination
-const [currentPage, setCurrentPage] = useState(1);
-const [totalPages, setTotalPages] = useState(1);
-const itemsPerPage = 5; 
-  
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 5;
+
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   const [currentProductId, setCurrentProductId] = useState<string | null>(null);
 
@@ -192,14 +192,14 @@ const itemsPerPage = 5;
   const fetchProducts = async (page = 1) => {
     try {
       const response = await axios.get(`${SERVER_URL}/product/get`, {
-      params: { page, limit: itemsPerPage },
-    });
-    const { data, totalPages: tp } = response.data;
+        params: { page, limit: itemsPerPage },
+      });
+      const { data, totalPages: tp } = response.data;
       console.log("data", response)
-      
-       setproductData(data);
-    setCurrentPage(page);
-    setTotalPages(tp);
+
+      setproductData(data);
+      setCurrentPage(page);
+      setTotalPages(tp);
 
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -293,18 +293,18 @@ const itemsPerPage = 5;
       alert("Failed to update product. Please try again.");
     }
   }
-//net previous handler
-const handlePrevPage = () => {
-  if (currentPage > 1) {
-    fetchProducts(currentPage - 1);
-  }
-};
+  //net previous handler
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      fetchProducts(currentPage - 1);
+    }
+  };
 
-const handleNextPage = () => {
-  if (currentPage < totalPages) {
-    fetchProducts(currentPage + 1);
-  }
-};
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      fetchProducts(currentPage + 1);
+    }
+  };
   // Reset dialog state when dialog closes
   useEffect(() => {
     fetchCategories()
@@ -532,7 +532,7 @@ const handleNextPage = () => {
                   <SelectItem value='all'>All Categories</SelectItem>
 
                   {categoryData.map((cat) => (
-                    <SelectItem key={cat._id} value={cat._id}>{cat.name }</SelectItem>
+                    <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -609,33 +609,33 @@ const handleNextPage = () => {
         </CardContent>
       </Card>
 
-    <div className="flex justify-center items-center gap-2 mt-4">
-  <Button
-    variant="outline"
-    onClick={handlePrevPage}
-    disabled={currentPage === 1}
-  >
-    Prev
-  </Button>
+      <div className="flex justify-center items-center gap-2 mt-4">
+        <Button
+          variant="outline"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </Button>
 
-  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-    <Button
-      key={pageNum}
-      variant={pageNum === currentPage ? "default" : "outline"}
-      onClick={() => fetchProducts(pageNum)}
-    >
-      {pageNum}
-    </Button>
-  ))}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <Button
+            key={pageNum}
+            variant={pageNum === currentPage ? "default" : "outline"}
+            onClick={() => fetchProducts(pageNum)}
+          >
+            {pageNum}
+          </Button>
+        ))}
 
-  <Button
-    variant="outline"
-    onClick={handleNextPage}
-    disabled={currentPage === totalPages}
-  >
-    Next
-  </Button>
-</div>
+        <Button
+          variant="outline"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </div>
 
 
     </div>

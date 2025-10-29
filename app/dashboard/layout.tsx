@@ -75,8 +75,8 @@ export default function DashboardLayout({
     { name: "Categories", href: "/dashboard/categories", icon: Calendar },
     { name: "Customers", href: "/dashboard/patients", icon: Users },
       { name: "Sales", href: "/dashboard/sales", icon: Users },
-       { name: "Suppliers", href: "/dashboard/payments", icon: Users },
-       { name: " Employees", href: "/dashboard/bpatients", icon: Users },
+       { name: "Suppliers", href: "/dashboard/ppayments", icon: Users },
+       { name: " Employees", href: "/dashboard/employees", icon: Users },
       
     // { name: "Consultations", href: "/dashboard/consultations", icon: ClipboardList },
     // { name: "Pharmacy", href: "/dashboard/pharmacy", icon: Pill },

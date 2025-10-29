@@ -24,12 +24,6 @@ import SaleActions from "@/components/ui/saleActions";
 import { Payload } from "recharts/types/component/DefaultLegendContent";
 
 
-const initialPayments = [
-  { id: 1, patient: "John Doe", amount: 120, method: "Credit Card", status: "Completed", date: "2024-06-01" },
-  { id: 2, patient: "Sarah Johnson", amount: 80, method: "Cash", status: "Pending", date: "2024-06-02" },
-  { id: 3, patient: "Mike Williams", amount: 200, method: "Insurance", status: "Completed", date: "2024-06-03" },
-  { id: 4, patient: "Emily Davis", amount: 50, method: "Credit Card", status: "Failed", date: "2024-06-04" },
-]
 
 const methods = ["all", "Credit Card", "Cash", "Insurance"]
 const statuses = ["all", "Completed", "Pending", "Failed"]
@@ -107,9 +101,9 @@ const Sale = () => {
     }
   });
   const [salesList, setSalesList] = useState<SalePayload[]>([])
-   const [selectedSale, setSelectedSale] = useState<any>(null)
-   const [isInvoiceDialogOpen, setIsInvoiceDialogOpen] = useState(false);
-   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSale, setSelectedSale] = useState<any>(null)
+  const [isInvoiceDialogOpen, setIsInvoiceDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
 
 
@@ -126,7 +120,7 @@ const Sale = () => {
       setCustomers([]);
     }
   };
-//ac
+  //ac
   //  Select customer
   const selectCustomer = (customer: Customer) => {
     setSelectedCustomer(customer);
@@ -258,44 +252,44 @@ const Sale = () => {
   const [selectedMethod, setSelectedMethod] = useState("all")
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
-  const [payments, setPayments] = useState(initialPayments)
+
   const [dialogMethod, setDialogMethod] = useState("")
   const [dialogStatus, setDialogStatus] = useState("")
 
   //filter
-// normalize once
-const normalized = searchTerm.trim().toLowerCase();
+  // normalize once
+  const normalized = searchTerm.trim().toLowerCase();
 
-// filtered list (also respects method/status if you want)
-const filteredSales = salesList.filter((sale: any) => {
-  const name = (sale?.customerId?.customerName || "").toString().toLowerCase();
-  const matchesName = name.includes(normalized);
+  // filtered list (also respects method/status if you want)
+  const filteredSales = salesList.filter((sale: any) => {
+    const name = (sale?.customerId?.customerName || "").toString().toLowerCase();
+    const matchesName = name.includes(normalized);
 
-  const matchesMethod = selectedMethod === "all" || sale.paymentMethod === selectedMethod;
-  // if your sale object has `status` use this, otherwise ignore:
-  const matchesStatus = selectedStatus === "all" || sale.status === selectedStatus;
+    const matchesMethod = selectedMethod === "all" || sale.paymentMethod === selectedMethod;
+    // if your sale object has `status` use this, otherwise ignore:
+    const matchesStatus = selectedStatus === "all" || sale.status === selectedStatus;
 
-  // when searchTerm empty, normalized === "" so includes("") === true -> shows all
-  return matchesName && matchesMethod && matchesStatus;
-});
+    // when searchTerm empty, normalized === "" so includes("") === true -> shows all
+    return matchesName && matchesMethod && matchesStatus;
+  });
 
-  function handleAddPayment(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const form = e.target as HTMLFormElement
-    const newPayment = {
-      id: payments.length + 1,
-      patient: (form.elements.namedItem('patient') as HTMLInputElement).value,
-      amount: Number((form.elements.namedItem('amount') as HTMLInputElement).value),
-      method: dialogMethod,
-      status: dialogStatus,
-      date: (form.elements.namedItem('date') as HTMLInputElement).value,
-    }
-    setPayments([newPayment, ...payments])
-    setIsAddDialogOpen(false)
-    setDialogMethod("")
-    setDialogStatus("")
-    form.reset()
-  }
+  // function handleAddPayment(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault()
+  //   const form = e.target as HTMLFormElement
+  //   const newPayment = {
+  //     id: payments.length + 1,
+  //     patient: (form.elements.namedItem('patient') as HTMLInputElement).value,
+  //     amount: Number((form.elements.namedItem('amount') as HTMLInputElement).value),
+  //     method: dialogMethod,
+  //     status: dialogStatus,
+  //     date: (form.elements.namedItem('date') as HTMLInputElement).value,
+  //   }
+  //   setPayments([newPayment, ...payments])
+  //   setIsAddDialogOpen(false)
+  //   setDialogMethod("")
+  //   setDialogStatus("")
+  //   form.reset()
+  // }
   //
   const fetchCustomers = async (query: string) => {
     try {
@@ -802,8 +796,8 @@ const filteredSales = salesList.filter((sale: any) => {
                 type="search"
                 placeholder="Search sales data by customer ..."
                 className="pl-8"
-               value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -827,7 +821,7 @@ const filteredSales = salesList.filter((sale: any) => {
                   ))}
                 </SelectContent>
               </Select> */}
-             
+
             </div>
           </div>
           <div className="rounded-md border overflow-auto">
@@ -842,97 +836,97 @@ const filteredSales = salesList.filter((sale: any) => {
                   <th className="h-12 px-4 text-left align-middle font-medium">Action</th>
                 </tr>
               </thead>
-            <tbody>
-  {filteredSales.length === 0 ? (
-    <tr>
-      <td colSpan={5} className="h-24 text-center text-gray-500">
-        No sales found{searchTerm ? ` for "${searchTerm}"` : ""}.
-      </td>
-    </tr>
-  ) : (
-    filteredSales.map((s: any) => (
-      <tr key={s._id} className="border-b transition-colors hover:bg-muted/50">
-        <td className="p-4 align-middle">{s.customerId?.customerName ?? "Unknown"}</td>
-        <td className="p-4 align-middle">₹{s.amount?.totalAmount ?? "-"}</td>
-        <td className="p-4 align-middle">{s.paymentMethod ?? "-"}</td>
-        <td className="p-4 align-middle">{s.saleDate ? new Date(s.saleDate).toLocaleDateString() : "-"}</td>
-        <td className="p-4 align-middle text-center">
-          <SaleActions
-            sale={s}
-            onView={(sale: any) => {
-              setSelectedSale(sale);
-              setIsInvoiceDialogOpen(true);
-            }}
-          />
-        </td>
-      </tr>
-    ))
-  )}
-</tbody>
-            </table>
-           
-    
- {/* 🧾 Sale Details Dialog */}
-      <Dialog open={isInvoiceDialogOpen} onOpenChange={setIsInvoiceDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Sale Invoice Details</DialogTitle>
-            <DialogDescription>
-              View sale information, customer details, and products.
-            </DialogDescription>
-          </DialogHeader>
-
-          {selectedSale && (
-            <div className="space-y-4">
-              {/* Customer Info */}
-              <div className="border-b pb-3">
-                <h2 className="font-semibold text-lg mb-1">Customer Info</h2>
-                <p>Name: {selectedSale.customerId?.customerName || "N/A"}</p>
-                <p>Date: {new Date(selectedSale.saleDate).toLocaleString()}</p>
-                <p>Payment: {selectedSale.paymentMethod}</p>
-              </div>
-
-              {/* Products Table */}
-              <table className="w-full border-collapse border">
-                <thead className="bg-gray-100">
+              <tbody>
+                {filteredSales.length === 0 ? (
                   <tr>
-                    <th className="p-2 text-left">Product</th>
-                    <th className="p-2 text-right">Qty</th>
-                    <th className="p-2 text-right">Price</th>
-                    <th className="p-2 text-right">Total</th>
+                    <td colSpan={5} className="h-24 text-center text-gray-500">
+                      No sales found{searchTerm ? ` for "${searchTerm}"` : ""}.
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {selectedSale.products?.map((p: any, i: number) => (
-                    <tr key={i} className="border-t">
-                      <td className="p-2">{p.productId?.productName || "Unknown"}</td>
-                      <td className="p-2 text-right">{p.quantity}</td>
-                      <td className="p-2 text-right">₹{p.price}</td>
-                      <td className="p-2 text-right font-medium">₹{p.total}</td>
+                ) : (
+                  filteredSales.map((s: any) => (
+                    <tr key={s._id} className="border-b transition-colors hover:bg-muted/50">
+                      <td className="p-4 align-middle">{s.customerId?.customerName ?? "Unknown"}</td>
+                      <td className="p-4 align-middle">₹{s.amount?.totalAmount ?? "-"}</td>
+                      <td className="p-4 align-middle">{s.paymentMethod ?? "-"}</td>
+                      <td className="p-4 align-middle">{s.saleDate ? new Date(s.saleDate).toLocaleDateString() : "-"}</td>
+                      <td className="p-4 align-middle text-center">
+                        <SaleActions
+                          sale={s}
+                          onView={(sale: any) => {
+                            setSelectedSale(sale);
+                            setIsInvoiceDialogOpen(true);
+                          }}
+                        />
+                      </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  ))
+                )}
+              </tbody>
+            </table>
 
-              {/* Totals */}
-              <div className="mt-4 text-right border-t pt-3">
-                <p>Subtotal: ₹{selectedSale.amount?.subtotal}</p>
-                <p>Discount: ₹{selectedSale.amount?.discount}</p>
-                <p>Tax: ₹{selectedSale.amount?.tax}</p>
-                <p className="text-lg font-bold text-blue-600">
-                  Total: ₹{selectedSale.amount?.totalAmount}
-                </p>
-              </div>
-            </div>
-          )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsInvoiceDialogOpen(false)}>
-              Close
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            {/* 🧾 Sale Details Dialog */}
+            <Dialog open={isInvoiceDialogOpen} onOpenChange={setIsInvoiceDialogOpen}>
+              <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle>Sale Invoice Details</DialogTitle>
+                  <DialogDescription>
+                    View sale information, customer details, and products.
+                  </DialogDescription>
+                </DialogHeader>
+
+                {selectedSale && (
+                  <div className="space-y-4">
+                    {/* Customer Info */}
+                    <div className="border-b pb-3">
+                      <h2 className="font-semibold text-lg mb-1">Customer Info</h2>
+                      <p>Name: {selectedSale.customerId?.customerName || "N/A"}</p>
+                      <p>Date: {new Date(selectedSale.saleDate).toLocaleString()}</p>
+                      <p>Payment: {selectedSale.paymentMethod}</p>
+                    </div>
+
+                    {/* Products Table */}
+                    <table className="w-full border-collapse border">
+                      <thead className="bg-gray-100">
+                        <tr>
+                          <th className="p-2 text-left">Product</th>
+                          <th className="p-2 text-right">Qty</th>
+                          <th className="p-2 text-right">Price</th>
+                          <th className="p-2 text-right">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {selectedSale.products?.map((p: any, i: number) => (
+                          <tr key={i} className="border-t">
+                            <td className="p-2">{p.productId?.productName || "Unknown"}</td>
+                            <td className="p-2 text-right">{p.quantity}</td>
+                            <td className="p-2 text-right">₹{p.price}</td>
+                            <td className="p-2 text-right font-medium">₹{p.total}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    {/* Totals */}
+                    <div className="mt-4 text-right border-t pt-3">
+                      <p>Subtotal: ₹{selectedSale.amount?.subtotal}</p>
+                      <p>Discount: ₹{selectedSale.amount?.discount}</p>
+                      <p>Tax: ₹{selectedSale.amount?.tax}</p>
+                      <p className="text-lg font-bold text-blue-600">
+                        Total: ₹{selectedSale.amount?.totalAmount}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setIsInvoiceDialogOpen(false)}>
+                    Close
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
 
 
           </div>

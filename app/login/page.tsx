@@ -36,7 +36,7 @@ const handleLogin = async(e: React.FormEvent)=>{
   try {
 
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL!
-    console.log("SERVER_URL =", SERVER_URL)
+  
     const res = await axios.post(`${SERVER_URL}/login`, formData);
 
     if (res.data && res.data.status) {
