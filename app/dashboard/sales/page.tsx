@@ -127,7 +127,7 @@ const Sale = () => {
     setCustomerSearch(`${customer.customerName} (${customer.customerPhone})`);
     setCustomers([]); // hide dropdown after select
     setShowCustomerDropdown(false)
-  };
+  };  
 
   //addn new customer
 
@@ -295,6 +295,8 @@ const Sale = () => {
     try {
       const response = await axios.get(`${SERVER_URL}/customer/get`, {
         params: { customerName: customerSearch, customerPhone: customerSearch },
+           headers: { Authorization: `Bearer ${token}` },
+
       });
       console.log("data", response)
       if (response.data?.data) {
@@ -367,6 +369,7 @@ const Sale = () => {
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },
+          
         }
       );
 
@@ -440,7 +443,7 @@ const Sale = () => {
               <DialogTitle>Add New Sale</DialogTitle>
               <DialogDescription>Enter the sales details below.</DialogDescription>
             </DialogHeader>
-            <form className="grid gap-4 py-4" onSubmit={handleAddPayment}>
+            <form className="grid gap-4 py-4" onSubmit={handleSaveSale}>
 
               <div className=" bg-gradient-to-br from-slate-50 to-slate-100 p-6">
                 <div className="max-w-6xl mx-auto">
@@ -547,8 +550,8 @@ const Sale = () => {
                           {selectedCustomer && (
                             <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200 flex justify-between items-center">
                               <div>
-                                <div className="font-semibold text-slate-900">{selectedCustomer.name}</div>
-                                <div className="text-sm text-slate-600">{selectedCustomer.phone}</div>
+                                <div className="font-semibold text-slate-900">{selectedCustomer.customerName}</div>
+                                <div className="text-sm text-slate-600">{selectedCustomer.customerPhone}</div>
                               </div>
                               <button
                                 onClick={() => {
